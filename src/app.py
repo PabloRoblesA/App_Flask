@@ -1,8 +1,11 @@
+#pip install flask
+
 from flask import Flask, request, render_template
 from pickle import load
+import pandas as pd
 
 app = Flask(__name__)
-model = load(open("../models/random_forest_classifier_default_42.sav", "rb"))
+model = load(open("random_forest_classifier_default_42.sav", "rb"))
 
 class_dict = {
     "0": "Clase 0",
@@ -13,7 +16,6 @@ class_dict = {
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        # Obtener los valores de las características del formulario
         dexnum = float(request.form["dexnum"])
         generation = float(request.form["generation"])
         height = float(request.form["height"])
@@ -25,7 +27,6 @@ def index():
         percent_female = float(request.form["percent_female"])
         egg_cycles = float(request.form["egg_cycles"])
         
-        # Adaptar los valores ingresados a tu conjunto de datos
         data = pd.DataFrame({
             'dexnum': [dexnum],
             'generation': [generation],
@@ -39,10 +40,8 @@ def index():
             'egg_cycles': [egg_cycles]
         })
         
-        # Realizar la predicción con tu modelo
         prediction = str(model.predict(data)[0])
         
-        # Obtener la clase correspondiente a la predicción
         pred_class = class_dict.get(prediction, "Clase Desconocida")
     else:
         pred_class = None
