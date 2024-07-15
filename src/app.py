@@ -1,4 +1,5 @@
 #pip install flask
+from app import app
 from flask import Flask, request, render_template
 from pickle import load
 
@@ -27,4 +28,5 @@ def index():
     return render_template("index.html", prediction = pred_class)
 
 
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
