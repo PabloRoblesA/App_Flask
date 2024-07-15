@@ -4,48 +4,27 @@ from pickle import load
 import pandas as pd
 
 app = Flask(__name__)
-model = load(open("random_forest_classifier_default_42.sav", "rb"))
+model = load(open("/src/decision_tree_classifier_default_42.sav", "rb"))
 
 class_dict = {
-    "0": "Clase 0",
-    "1": "Clase 1",
-    "2": "Clase 2"
+    "0": "Iris setosa",
+    "1": "Iris versicolor",
+    "2": "Iris virginica"
 }
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods = ["GET", "POST"])
 def index():
-    if request.method == "POST":
-        dexnum = float(request.form["dexnum"])
-        generation = float(request.form["generation"])
-        height = float(request.form["height"])
-        weight = float(request.form["weight"])
-        catch_rate = float(request.form["catch_rate"])
-        base_friendship = float(request.form["base_friendship"])
-        base_exp = float(request.form["base_exp"])
-        percent_male = float(request.form["percent_male"])
-        percent_female = float(request.form["percent_female"])
-        egg_cycles = float(request.form["egg_cycles"])
-        
-        data = pd.DataFrame({
-            'dexnum': [dexnum],
-            'generation': [generation],
-            'height': [height],
-            'weight': [weight],
-            'catch_rate': [catch_rate],
-            'base_friendship': [base_friendship],
-            'base_exp': [base_exp],
-            'percent_male': [percent_male],
-            'percent_female': [percent_female],
-            'egg_cycles': [egg_cycles]
-        })
-        
+    if request.method == "POST":        
+        val1 = float(request.form["val1"])
+        val2 = float(request.form["val2"])
+        val3 = float(request.form["val3"])
+        val4 = float(request.form["val4"])
+
+        data = [[val1, val2, val3, val4]]
         prediction = str(model.predict(data)[0])
-        
-        pred_class = class_dict.get(prediction, "Clase Desconocida")
+        pred_class = class_dict[prediction]
+
     else:
         pred_class = None
-    
-    return render_template("index.html", prediction=pred_class)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+    return render_template("index.html", prediction = pred_class)
