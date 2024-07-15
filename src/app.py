@@ -4,7 +4,7 @@ from pickle import load
 import pandas as pd
 
 app = Flask(__name__)
-model = load(open("/src/decision_tree_classifier_default_42.sav", "rb"))
+model = load(open("decision_tree_classifier_default_42.sav", "rb"))
 
 class_dict = {
     "0": "Iris setosa",
