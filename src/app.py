@@ -5,7 +5,7 @@ from flask import Flask, request, render_template
 from pickle import load
 import pandas as pd
 
-app1 = Flask(__name__)
+app = Flask(__name__)
 model = load(open("decision_tree_classifier_default_42.sav", "rb"))
 
 class_dict = {
@@ -14,7 +14,7 @@ class_dict = {
     "2": "Iris virginica"
 }
 
-@app1.route("/", methods = ["GET", "POST"])
+@app.route("/", methods = ["GET", "POST"])
 def index():
     if request.method == "POST":        
         val1 = float(request.form["val1"])
