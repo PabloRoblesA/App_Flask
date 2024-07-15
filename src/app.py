@@ -1,5 +1,4 @@
 #pip install flask
-
 from flask import Flask, request, render_template
 from pickle import load
 import pandas as pd
