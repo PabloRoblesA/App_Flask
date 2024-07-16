@@ -1,5 +1,4 @@
 #pip install flask
-from app import app
 from flask import Flask, request, render_template
 from pickle import load
 
